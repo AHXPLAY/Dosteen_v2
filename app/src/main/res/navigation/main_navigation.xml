@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/nav_simple_user">
+
+    <fragment
+    android:id="@+id/nav_simple_user"
+    android:name="com.dahy.practice.ui.SimpleUserFragment"
+    android:label="Текущие события"
+    tools:layout="@layout/fragment_simple_user">
+        <action
+            android:id="@+id/action_nav_simple_user_to_nav_teacher"
+            app:destination="@id/nav_teacher" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_teacher"
+        android:name="com.dahy.practice.ui.TeacherFragment"
+        android:label="Ваши события"
+        tools:layout="@layout/fragment_teacher">
+        <action
+            android:id="@+id/action_nav_teacher_to_nav_account"
+            app:destination="@id/nav_account" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.dahy.practice.ui.AccountFragment"
+        android:label="Ваш аккаунт"
+        tools:layout="@layout/fragment_account">
+    </fragment>
+</navigation>

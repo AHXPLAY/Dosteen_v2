@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="headers">24dp</dimen>
+    <dimen name="user_image">100dp</dimen>
+    <dimen name="accaunt_fragment">20dp</dimen>
+</resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@drawable/login_gradient">
+
+    <TextView
+        android:id="@+id/loginHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/regHeader"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/headers"
+        android:layout_marginTop="20dp"
+        />
+    <RelativeLayout
+        android:id="@+id/loginFields"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginHeader"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp">
+
+        <EditText
+            android:id="@+id/emailField"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            android:layout_marginBottom="20dp"
+            />
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_below="@id/emailField"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:layout_marginBottom="20dp"/>
+        <EditText
+            android:id="@+id/passwordConfirmField"
+            android:layout_below="@id/passwordField"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/passwordConfirm"/>
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_below="@id/passwordConfirmField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/regButton"
+            android:background="@color/button"
+            android:padding="5dp"
+            />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/stateChanger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="@string/changeToLog"
+        android:textColor="#808080"
+        android:layout_below="@id/loginFields"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textSize="16dp"/>
+<ProgressBar
+    android:id="@+id/loginProgressBar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:visibility="gone"/>
+
+
+</RelativeLayout>

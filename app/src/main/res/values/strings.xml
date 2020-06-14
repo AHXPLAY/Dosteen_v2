@@ -1,0 +1,56 @@
+<resources>
+    <!-- Authentication activity -->
+    <string name="app_name">Dosteen</string>
+    <string name="regHeader">Регистрация</string>
+    <string name="logHeader">Вход</string>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="regButton">Создать</string>
+    <string name="logButton">Войти</string>
+    <string name="changeToLog">Войти в аккаунт</string>
+    <string name="changeToReg">Создать аккаунт</string>
+    <string name="passwordConfirm">Подтвердите пароль</string>
+    <string name="changeProfileButtonIdle">Редактировать профиль</string>
+    <string name="changeProfileButtonChanging">Подтвердить изменения</string>
+
+    <!-- Account fragment -->
+    <string name="username_header">Ваше ФИО: </string>
+    <string name="username_hint">ФИО</string>
+
+    <string name="contacts_header">Ваши контакты: </string>
+    <string name="contacts_hint">E-mail, телефон и другое</string>
+
+    <string name="achievements_header">Ваши достижения: </string>
+    <string name="achievements_hint">Спортивные звания, выступления на конференциях, дипломы и др.</string>
+
+    <!-- Event classes values -->
+    <string name="sport_value">Sport</string>
+    <string name="edu_value">Education</string>
+    <string name="buisness_value">Buisness</string>
+    <string name="creative_value">Creative</string>
+
+    <!-- Adding event-->
+    <string name="addNameHint">Введите название события</string>
+    <string name="addClass">Выберите тип события</string>
+    <string name="addCityHint">Напишите город события</string>
+    <string name="addAdressHint">Введите адрес события</string>
+    <string name="addSiteHint">Напишите сайт события(необязательно)</string>
+    <string name="addDescriptoinHint">Описание события</string>
+    <string-array name="chooseClassArray">
+        <item>Спорт</item>
+        <item>Образование</item>
+        <item>Бизнес</item>
+        <item>Творчество</item>
+    </string-array>
+
+    <!-- Show info activity-->
+    <string name="showInfoNameHeader">Название:</string>
+    <string name="showInfoTypeHeader">Тип события:</string>
+    <string name="showInfoCityHeader">Город:</string>
+    <string name="showInfoAdressHeader">Адрес:</string>
+    <string name="showInfoSiteHeader">Сайт:</string>
+    <string name="showInfoDescriptionHeader">Описание:</string>
+    <string name="title_activity_maps">Map</string>
+
+
+</resources>
