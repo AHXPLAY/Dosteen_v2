@@ -46,8 +46,6 @@ public class AccountFragment extends Fragment {
     Button cancelButton;
     TextView usernameLabel;
     EditText usernameEdit;
-    TextView contactsLabel;
-    EditText contactsEdit;
     TextView achievementsLabel;
     EditText achievementsEdit;
 
@@ -119,9 +117,6 @@ public class AccountFragment extends Fragment {
         usernameLabel = view.findViewById(R.id.usernameLabel);
         usernameEdit = view.findViewById(R.id.usernameEdit);
 
-        contactsLabel = view.findViewById(R.id.contactsLabel);
-        contactsEdit = view.findViewById(R.id.contactsEdit);
-
         achievementsLabel = view.findViewById(R.id.achievementsLabel);
         achievementsEdit = view.findViewById(R.id.achievementsEdit);    }
 
@@ -136,9 +131,6 @@ public class AccountFragment extends Fragment {
 
         usernameLabel.setVisibility(View.GONE);
         usernameEdit.setVisibility(View.VISIBLE);
-
-        contactsLabel.setVisibility(View.GONE);
-        contactsEdit.setVisibility(View.VISIBLE);
 
         achievementsLabel.setVisibility(View.GONE);
         achievementsEdit.setVisibility(View.VISIBLE);
@@ -157,9 +149,6 @@ public class AccountFragment extends Fragment {
         usernameLabel.setVisibility(View.VISIBLE);
         usernameEdit.setVisibility(View.GONE);
 
-        contactsLabel.setVisibility(View.VISIBLE);
-        contactsEdit.setVisibility(View.GONE);
-
         achievementsLabel.setVisibility(View.VISIBLE);
         achievementsEdit.setVisibility(View.GONE);
     }
@@ -175,7 +164,6 @@ public class AccountFragment extends Fragment {
 
         DocumentReference userDocument = db.collection("UsersDatabase").document(userId);
         userDocument.update("ahivements", achievementsEdit.getText().toString());
-        userDocument.update("contacts",contactsEdit.getText().toString());
         userDocument.update("name", usernameEdit.getText().toString());
 
     }
@@ -192,11 +180,9 @@ public class AccountFragment extends Fragment {
         ArrayList<View> editsList = new ArrayList<>();
 
         labelsList.add(usernameLabel);
-        labelsList.add(contactsLabel);
         labelsList.add(achievementsLabel);
 
         editsList.add(usernameEdit);
-        editsList.add(contactsEdit);
         editsList.add(achievementsEdit);
 
         for(int i = 0; i < labelsList.size(); i++){
@@ -250,7 +236,6 @@ public class AccountFragment extends Fragment {
 
     private void setFieldsData(User user){
             usernameLabel.setText(user.getName());
-            contactsLabel.setText(user.getContacts());
             achievementsLabel.setText(user.getAhivements());
             if (checkIfImageExists(user.getImageUrl())) {
                 Picasso.get().load(user.getImageUrl()).into(userIcon, new Callback() {
@@ -316,15 +301,8 @@ public class AccountFragment extends Fragment {
         });
     }
 
-    private void toCLeanEdits(){
-        achievementsEdit.setText("");
-        contactsEdit.setText("");
-        usernameEdit.setText("");
-    }
-
     private void toFillEdits(){
         usernameEdit.setText(usernameLabel.getText().toString());
-        contactsEdit.setText(contactsLabel.getText().toString());
         achievementsEdit.setText(achievementsLabel.getText().toString());
     }
 

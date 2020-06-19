@@ -17,10 +17,7 @@
     <string name="username_header">Ваше ФИО: </string>
     <string name="username_hint">ФИО</string>
 
-    <string name="contacts_header">Ваши контакты: </string>
-    <string name="contacts_hint">E-mail, телефон и другое</string>
-
-    <string name="achievements_header">Ваши достижения: </string>
+    <string name="aboutMeHeader">О себе: </string>
     <string name="achievements_hint">Спортивные звания, выступления на конференциях, дипломы и др.</string>
 
     <!-- Event classes values -->
@@ -29,7 +26,7 @@
     <string name="buisness_value">Buisness</string>
     <string name="creative_value">Creative</string>
 
-    <!-- Adding event-->
+    <!-- Adding and editing event-->
     <string name="addNameHint">Введите название события</string>
     <string name="addClass">Выберите тип события</string>
     <string name="addCityHint">Напишите город события</string>
@@ -42,6 +39,17 @@
         <item>Бизнес</item>
         <item>Творчество</item>
     </string-array>
+    <string name="dateBegin">Дата начала</string>
+    <string name="dateEnd">Дата окончания</string>
+
+    <!-- Event activity exceptions-->
+    <string name ="nameEmptyException">Вы не ввели название события</string>
+    <string name = "cityEmptyException">Вы не ввели город события</string>
+    <string name = "beginDateEmptyException">Вы не ввели дату начала события</string>
+    <string name = "endDateEmptyException">Вы не ввели дату окончания события</string>
+    <string name = "addressEmptyException">Вы не ввели адрес события</string>
+    <string name = "contactsEmptyException">Вы не указали контакты</string>
+    <string name = "descriptionEmptyException">Укажите краткое описание события</string>
 
     <!-- Show info activity-->
     <string name="showInfoNameHeader">Название:</string>
@@ -50,7 +58,12 @@
     <string name="showInfoAdressHeader">Адрес:</string>
     <string name="showInfoSiteHeader">Сайт:</string>
     <string name="showInfoDescriptionHeader">Описание:</string>
-    <string name="title_activity_maps">Map</string>
+    <string name = "showInfoContactsHeader">Контакты:</string>
+    <string name = "showInfoTimeHeader">Период события:</string>
 
 
+    <!--Application Nav -->
+    <string name="allEventsFragment">Все события</string>
+    <string name = "userEventsFragment">Ваши события</string>
+    <string name = "accountFragment">Ваш профиль</string>
 </resources>

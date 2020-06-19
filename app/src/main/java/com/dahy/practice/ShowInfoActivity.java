@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -16,6 +17,8 @@ public class ShowInfoActivity extends AppCompatActivity {
     TextView adress;
     TextView site;
     TextView description;
+    TextView contacts;
+    TextView date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +27,11 @@ public class ShowInfoActivity extends AppCompatActivity {
         initializeViews();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Информация события");
+        getSupportActionBar().setTitle("Информация о событии");
 
-        Intent choseEvent = getIntent();
+        Intent chosenEventIntent = getIntent();
 
-        fillFields(choseEvent);
+        fillFields(chosenEventIntent);
     }
 
     private void fillFields(Intent intent) {
@@ -50,9 +53,18 @@ public class ShowInfoActivity extends AppCompatActivity {
                 type.setText("Спорт");
         }
         city.setText(intent.getStringExtra("city"));
-        adress.setText(intent.getStringExtra("adress"));
+        adress.setText(intent.getStringExtra("address"));
         description.setText(intent.getStringExtra("description"));
         site.setText(intent.getStringExtra("site"));
+        contacts.setText(intent.getStringExtra("contacts"));
+        String beginDate = intent.getStringExtra("beginDate");
+        String endDate =  intent.getStringExtra("endDate");
+        if ((beginDate != null && endDate != null) && !(beginDate.isEmpty() || endDate.isEmpty())){
+            date.setText(beginDate + " - " + endDate);
+        }else{
+            date.setText("Постоянно");
+        }
+
 
     }
 
@@ -63,6 +75,8 @@ public class ShowInfoActivity extends AppCompatActivity {
         adress = findViewById(R.id.adress);
         site = findViewById(R.id.site);
         description = findViewById(R.id.description);
-
+        contacts = findViewById(R.id.contacts);
+        date = findViewById(R.id.date);
     }
+
 }

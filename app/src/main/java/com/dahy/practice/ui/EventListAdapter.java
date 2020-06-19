@@ -1,9 +1,7 @@
 package com.dahy.practice.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dahy.practice.EditEventActivity;
-import com.dahy.practice.MainActivity;
 import com.dahy.practice.R;
 import com.dahy.practice.ShowInfoActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventHolder> {
 
@@ -118,25 +114,25 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         Intent intent = new Intent(context, EditEventActivity.class);
         intent.putExtra("typeActivity", "edit");
         intent.putExtra("pos", position);
-        // Log.d("ggggg", "" + position);
-        intent.putExtra("name", nowItem.getName());
-        intent.putExtra("classIcon", nowItem.getClassIcon());
-        intent.putExtra("city", nowItem.getCity());
-        intent.putExtra("adress", nowItem.getAdress());
-        intent.putExtra("description", nowItem.getDescription());
-        intent.putExtra("site", nowItem.getSite());
-        intent.putExtra("preview", nowItem.getPreviewUrl());
+        putFieldsInIntent(intent, nowItem);
         context.startActivity(intent);
     }
     private void forUser(Event nowItem){
         Intent intent = new Intent(context, ShowInfoActivity.class);
+        putFieldsInIntent(intent, nowItem);
+        context.startActivity(intent);
+    }
+    private void putFieldsInIntent(Intent intent, Event nowItem){
         intent.putExtra("name", nowItem.getName());
         intent.putExtra("classIcon", nowItem.getClassIcon());
         intent.putExtra("city", nowItem.getCity());
-        intent.putExtra("adress", nowItem.getAdress());
+        intent.putExtra("address", nowItem.getAddress());
         intent.putExtra("description", nowItem.getDescription());
+        intent.putExtra("contacts", nowItem.getContacts());
         intent.putExtra("site", nowItem.getSite());
         intent.putExtra("preview", nowItem.getPreviewUrl());
-        context.startActivity(intent);
+        intent.putExtra("beginDate", nowItem.getBeginDate());
+        intent.putExtra("endDate", nowItem.getEndDate());
+        intent.putExtra("constant", nowItem.getConstant());
     }
 }

@@ -10,14 +10,36 @@ public class Event {
     String name;
     String description;
     boolean isConstant;
+    String beginDate;
+    String endDate;
     String city;
-    String adress;
     String site;
+    String address;
+    String contacts;
+
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
 
     public Event(String classIcon, String name, String city) {
         this.classIcon = classIcon;
         this.name = name;
         this.city = city;
+    }
+
+
+    public String getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
     }
 
     public Event(String name) {
@@ -73,26 +95,18 @@ public class Event {
         this.city = city;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
-
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Event() {
     }
 
-    public boolean isConstant() {
+    public boolean getConstant() {
         return isConstant;
     }
 
@@ -100,20 +114,19 @@ public class Event {
         isConstant = constant;
     }
 
-    public Event(String previewUrl,
-                 String classIcon,
-                 ArrayList<String> picturesUrls,
-                 String name, String description,
-                 boolean isConstant, String city,
-                 String adress, String site) {
-        this.previewUrl = previewUrl;
-        this.classIcon = classIcon;
-        this.picturesUrls = picturesUrls;
-        this.name = name;
-        this.description = description;
-        this.isConstant = isConstant;
-        this.city = city;
-        this.adress = adress;
-        this.site = site;
+    public String getBeginDate() {
+        return beginDate;
+    }
+
+    public void setBeginDate(String beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

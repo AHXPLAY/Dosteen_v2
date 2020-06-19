@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,13 +15,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
-import com.dahy.practice.R;
 import com.dahy.practice.ui.Event;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -45,12 +50,17 @@ public class EditEventActivity extends AppCompatActivity {
     EditText name;
     Spinner eventClass;
     EditText city;
-    EditText adress;
+    EditText address;
     EditText site;
     EditText description;
+    EditText contacts;
     Button apply;
     Button previewButton;
+    RadioButton isConstantCircle;
+    RadioButton isNotConstantCircle;
     ImageView previewImage;
+    Button beginDataButton;
+    Button endDataButton;
 
     Toolbar toolbar;
     Event event = new Event();
@@ -62,6 +72,7 @@ public class EditEventActivity extends AppCompatActivity {
 
     Intent previousIntent;
     Uri imageUri;
+    boolean isConstant = true;
     final static int RC_IMAGE = 123;
 
     @Override
@@ -93,15 +104,17 @@ public class EditEventActivity extends AppCompatActivity {
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imageUri != null) {
-                    uploadPreview(imageUri, mAuth.getUid());
-                } else {
-                    createEventObj(previousIntent.getStringExtra("preview"));
-                    if (typeActivity.equals("add")) {
-                        addEvent();
+                if(checkAllConditions()){
+                    if (imageUri != null) {
+                        uploadPreview(imageUri, mAuth.getUid());
+                    } else {
+                        createEventObj(previousIntent.getStringExtra("preview"));
+                        if (typeActivity.equals("add")) {
+                            addEvent();
 
-                    } else if (typeActivity.equals("edit")) {
-                        editEvent(position);
+                        } else if (typeActivity.equals("edit")) {
+                            editEvent(position);
+                        }
                     }
                 }
 
@@ -130,41 +143,62 @@ public class EditEventActivity extends AppCompatActivity {
         eventClass = findViewById(R.id.chooseClass);
         createSpinner();
         city = findViewById(R.id.cityField);
-        adress = findViewById(R.id.adressField);
+        address = findViewById(R.id.addressField);
         site = findViewById(R.id.siteField);
         description = findViewById(R.id.descriptionField);
+        contacts = findViewById(R.id.contactsField);
         apply = findViewById(R.id.applyButton);
         previewButton = findViewById(R.id.previewButton);
         previewImage = findViewById(R.id.previewImage);
+        isConstantCircle = findViewById(R.id.isConstant);
+        isNotConstantCircle =findViewById(R.id.isNotConstant);
+        beginDataButton = findViewById(R.id.beginDate);
+        endDataButton = findViewById(R.id.endDate);
         if (previous.getStringExtra("typeActivity").equals("edit")) {
-            name.setText(previous.getStringExtra("name"));
-            city.setText(previous.getStringExtra("city"));
-            adress.setText(previous.getStringExtra("adress"));
-            site.setText(previous.getStringExtra("site"));
-            description.setText(previous.getStringExtra("description"));
-            if (previous.getStringExtra("preview") != null) {
-                Picasso.get().load(previous.getStringExtra("preview")).into(previewImage);
-            }
-            event.setClassIcon(previous.getStringExtra("classIcon"));
-            switch (previous.getStringExtra("classIcon")) {
-                case "Sport":
-                    eventClass.setSelection(0);
-                    break;
-                case "Education":
-                    eventClass.setSelection(1);
-                    break;
-                case "Buisness":
-                    eventClass.setSelection(2);
-                    break;
-                case "Creative":
-                    eventClass.setSelection(3);
-                    break;
-                default:
-                    eventClass.setSelection(0);
-            }
-            apply.setText("Изменить");
-
+            fillViews(previous);
         }
+    }
+
+    private void fillViews(Intent previous){
+        name.setText(previous.getStringExtra("name"));
+        city.setText(previous.getStringExtra("city"));
+        address.setText(previous.getStringExtra("address"));
+        site.setText(previous.getStringExtra("site"));
+        description.setText(previous.getStringExtra("description"));
+        contacts.setText(previous.getStringExtra("contacts"));
+        if(previous.getBooleanExtra("constant", true)) {
+            isConstantCircle.setChecked(true);
+            isNotConstantCircle.setChecked(false);
+            isConstant = true;
+        }else{
+            isConstantCircle.setChecked(false);
+            isNotConstantCircle.setChecked(true);
+            isConstant = false;
+            findViewById(R.id.setDateFields).setVisibility(View.VISIBLE);
+            beginDataButton.setText(previous.getStringExtra("beginDate"));
+            endDataButton.setText(previous.getStringExtra("endDate"));
+        }
+        if (previous.getStringExtra("preview") != null) {
+            Picasso.get().load(previous.getStringExtra("preview")).into(previewImage);
+        }
+        event.setClassIcon(previous.getStringExtra("classIcon"));
+        switch (previous.getStringExtra("classIcon")) {
+            case "Sport":
+                eventClass.setSelection(0);
+                break;
+            case "Education":
+                eventClass.setSelection(1);
+                break;
+            case "Buisness":
+                eventClass.setSelection(2);
+                break;
+            case "Creative":
+                eventClass.setSelection(3);
+                break;
+            default:
+                eventClass.setSelection(0);
+        }
+        apply.setText("Изменить");
     }
 
     private void createSpinner() {
@@ -224,7 +258,7 @@ public class EditEventActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("TAGY", "DocumentSnapshot data: " + document.getData());
-                        uploadToFirebase(document.getData().get("listOfEvents"), pos, userDocument);
+                        uploadListToFirebase(document.getData().get("listOfEvents"), pos, userDocument);
                     } else {
                     }
                 } else {
@@ -234,7 +268,7 @@ public class EditEventActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadToFirebase(Object obj, int pos, DocumentReference userDocument) {
+    private void uploadListToFirebase(Object obj, int pos, DocumentReference userDocument) {
         ArrayList list = (ArrayList) obj;
         list.set(pos, event);
         userDocument.update("listOfEvents", list).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -252,11 +286,21 @@ public class EditEventActivity extends AppCompatActivity {
 
     private void createEventObj(String uri) {
         event.setName(name.getText().toString());
-        event.setAdress(adress.getText().toString());
+        event.setAddress(address.getText().toString());
         event.setCity(city.getText().toString());
         event.setDescription(description.getText().toString());
         event.setSite(site.getText().toString());
+        event.setContacts(contacts.getText().toString());
         event.setPreviewUrl(uri);
+        event.setConstant(isConstant);
+        if (!isConstant){
+            event.setBeginDate(beginDataButton.getText().toString());
+            event.setEndDate(endDataButton.getText().toString());
+        }else{
+            event.setBeginDate("");
+            event.setEndDate("");
+        }
+
 
 
     }
@@ -345,7 +389,75 @@ public class EditEventActivity extends AppCompatActivity {
 
     private String generateUniqueID(){
         UUID id = UUID.randomUUID();
-        Log.d("UniqueID", id.toString());
+        //Log.d("UniqueID", id.toString());
         return id.toString();
+    }
+
+    public void onChooseIfConstant(View view){
+        boolean checked = ((RadioButton)view).isChecked();
+        switch (view.getId()){
+            case R.id.isConstant:
+                if(checked){
+                    isConstant = true;
+                    isNotConstantCircle.setChecked(false);
+                    findViewById(R.id.setDateFields).setVisibility(View.GONE);
+                }
+                break;
+            case R.id.isNotConstant:
+                if(checked){
+                    isConstant = false;
+                    findViewById(R.id.setDateFields).setVisibility(View.VISIBLE);
+                    isConstantCircle.setChecked(false);
+                }
+                break;
+        }
+    }
+
+    public void callDatePickerDialog(View view){
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        final Button b = (Button) view;
+        if (!b.getText().equals(getString(R.string.dateBegin)) && !b.getText().equals(getString(R.string.dateEnd))) {
+            String date = b.getText().toString();
+            String[] dmy = date.split(".");
+            day = Integer.parseInt(dmy[0]);
+            month = Integer.parseInt(dmy[1]) - 1;
+            year = Integer.parseInt(dmy[2]);
+
+            //Log.d("TAGGYBOY", date.split(".")[0]);
+
+
+        }
+        DatePickerDialog dpd = new DatePickerDialog(EditEventActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                b.setText(dayOfMonth + "." + (month + 1) + "." + year);
+            }
+        }, year, month, day);
+        dpd.show();
+    }
+
+    private boolean checkAllConditions(){
+        boolean isAllOk = false;
+        if (name.getText().toString().isEmpty()){
+            Toast.makeText(this, R.string.nameEmptyException, Toast.LENGTH_SHORT).show();
+        }else if(city.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.cityEmptyException, Toast.LENGTH_SHORT).show();
+        }else if(!isConstant && beginDataButton.getText().toString().equals(getString(R.string.dateBegin))) {
+            Toast.makeText(this, R.string.beginDateEmptyException, Toast.LENGTH_SHORT).show();
+        }else if(!isConstant && endDataButton.getText().toString().equals(getString(R.string.dateEnd))) {
+            Toast.makeText(this, R.string.endDateEmptyException, Toast.LENGTH_SHORT).show();
+        }else if(address.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.addressEmptyException, Toast.LENGTH_SHORT).show();
+        }else if(contacts.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.contactsEmptyException, Toast.LENGTH_SHORT).show();
+        }else if(description.getText().toString().isEmpty()) {
+            Toast.makeText(this, R.string.descriptionEmptyException, Toast.LENGTH_SHORT).show();
+        }else{
+            isAllOk= true;
+        }
+        return isAllOk;
     }
 }

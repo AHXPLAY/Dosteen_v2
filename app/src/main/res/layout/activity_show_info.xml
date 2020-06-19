@@ -118,8 +118,53 @@
                 android:textSize="@dimen/headers"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/siteContainer"
+            android:id="@+id/dateContainer"
             android:layout_below="@id/adressContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/dateHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showInfoTimeHeader"
+                android:textSize="@dimen/headers" />
+            <TextView
+                android:id="@+id/date"
+                android:layout_below="@id/dateHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/headers"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/contactsContainer"
+            android:layout_below="@id/dateContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/contactsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showInfoContactsHeader"
+                android:textSize="@dimen/headers"
+
+                />
+            <TextView
+                android:id="@+id/contacts"
+                android:layout_below="@id/contactsHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="@dimen/headers"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/siteContainer"
+            android:layout_below="@id/contactsContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp">

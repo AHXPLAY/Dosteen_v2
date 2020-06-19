@@ -6,18 +6,9 @@ import java.util.List;
 public class User {
 
     String name;
-    String contacts;
     String ahivements;
     String imageUrl = "";
     List<Event> listOfEvents;
-
-    public User(String name, String contacts, String ahivements, String imageUrl, List<Event> listOfEvents) {
-        this.name = name;
-        this.contacts = contacts;
-        this.ahivements = ahivements;
-        this.imageUrl = imageUrl;
-        this.listOfEvents = listOfEvents;
-    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -41,21 +32,6 @@ public class User {
 
     public void setListOfEvents(List<Event> listOfEvents) {
         this.listOfEvents = listOfEvents;
-    }
-
-    public User(String name, String contacts, String ahivements, List<Event> listOfEvents) {
-        this.name = name;
-        this.contacts = contacts;
-        this.ahivements = ahivements;
-        this.listOfEvents = listOfEvents;
-    }
-
-    public String getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
     }
 
     public String getAhivements() {

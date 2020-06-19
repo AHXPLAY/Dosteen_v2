@@ -118,7 +118,12 @@ public class TeacherFragment extends Fragment {
                 event.setSite(gotList.get(i).get("site").toString());
                 event.setDescription(gotList.get(i).get("description").toString());
                 event.setCity(gotList.get(i).get("city").toString());
-                event.setAdress(gotList.get(i).get("adress").toString());
+                event.setAddress(gotList.get(i).get("address").toString());
+                event.setConstant((boolean)gotList.get(i).get("constant"));
+                event.setContacts(gotList.get(i).get("contacts").toString());
+                event.setBeginDate(gotList.get(i).get("beginDate").toString());
+                event.setEndDate(gotList.get(i).get("endDate").toString());
+                //Log.d("ConstantMean",gotList.get(i).get("constant").toString() );
                 if(gotList.get(i).get("previewUrl") != null) {
                     event.setPreviewUrl(gotList.get(i).get("previewUrl").toString());
                 }

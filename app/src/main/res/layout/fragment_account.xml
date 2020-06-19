@@ -105,41 +105,9 @@
 
         </RelativeLayout>
     </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/contactsContainer"
-        android:layout_below="@id/name_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        >
-        <TextView
-            android:id="@+id/contactsHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/contacts_header"
-            android:textSize="@dimen/accaunt_fragment"/>\
-        <TextView
-            android:id="@+id/contactsLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/contactsHeader"
-            android:textSize="@dimen/accaunt_fragment"
-            android:textColor="@color/profileLabels"
-            android:layout_marginTop="10dp"
-            />
-        <EditText
-            android:id="@+id/contactsEdit"
-            android:layout_below="@id/contactsHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/contacts_hint"
-            android:textSize="@dimen/accaunt_fragment"
-            android:visibility="gone"/>
-    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/achievementsContainer"
-        android:layout_below="@id/contactsContainer"
+        android:layout_below="@id/name_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -148,8 +116,8 @@
             android:id="@+id/achievementsHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/achievements_header"
-            android:textSize="@dimen/accaunt_fragment"/>\
+            android:text="@string/aboutMeHeader"
+            android:textSize="@dimen/accaunt_fragment"/>
         <TextView
             android:id="@+id/achievementsLabel"
             android:layout_width="match_parent"
