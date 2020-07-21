@@ -1,6 +1,11 @@
 <resources>
-    <!-- Authentication activity -->
+    <!--Application level strings -->
     <string name="app_name">Dosteen</string>
+
+    <!--Searching-->
+    <string name="search_hint">Поиск событий</string>
+
+    <!-- Authentication activity -->
     <string name="regHeader">Регистрация</string>
     <string name="logHeader">Вход</string>
     <string name="email">Электронная почта</string>
@@ -66,4 +71,18 @@
     <string name="allEventsFragment">Все события</string>
     <string name = "userEventsFragment">Ваши события</string>
     <string name = "accountFragment">Ваш профиль</string>
+
+    <!-- Lists for search-->
+    <string name = "searchTypeName">Название</string>
+    <string name = "searchTypeCity">Город</string>
+
+    <string name="selectAnyTypeOfEvents">Любой</string>
+    <string name="selectSportTypeOfEvents">Спорт</string>
+    <string name="selectCreativeTypeOfEvents">Творчество</string>
+    <string name="selectBuisnessTypeOfEvents">Бизнес</string>
+    <string name="selectEduTypeOfEvents">Образование</string>
+
+    <string name="selectAnyTimeOfEvent">Любое</string>
+    <string name="selectConstantTimeOfEvent">Постоянное</string>
+    <string name="selectTemporaryTimeOfEvent">Временное</string>
 </resources>

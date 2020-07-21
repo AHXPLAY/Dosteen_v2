@@ -15,7 +15,9 @@
         <activity android:name=".EditEventActivity" />
         <activity
             android:name=".MainActivity"
-             />
+            >
+
+        </activity>
         <activity
             android:name=".LoginActivity">
             <intent-filter>

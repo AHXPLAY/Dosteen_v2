@@ -5,8 +5,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -19,6 +27,8 @@ public class ShowInfoActivity extends AppCompatActivity {
     TextView description;
     TextView contacts;
     TextView date;
+    ImageView preview;
+    ProgressBar imageLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +45,22 @@ public class ShowInfoActivity extends AppCompatActivity {
     }
 
     private void fillFields(Intent intent) {
+        String previewUrl = intent.getStringExtra("preview");
+        if(previewUrl != null){
+            imageLoading.setVisibility(View.VISIBLE);
+            Picasso.get().load(previewUrl).into(preview, new Callback() {
+                @Override
+                public void onSuccess() {
+                    imageLoading.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Log.d("loadImageException", e.toString());
+                    Toast.makeText(ShowInfoActivity.this, "Ошибка загрузки изображения", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         name.setText(intent.getStringExtra("name"));
         switch (intent.getStringExtra("classIcon")){
             case "Sport" :
@@ -56,6 +82,7 @@ public class ShowInfoActivity extends AppCompatActivity {
         adress.setText(intent.getStringExtra("address"));
         description.setText(intent.getStringExtra("description"));
         site.setText(intent.getStringExtra("site"));
+        site.setMovementMethod(LinkMovementMethod.getInstance());
         contacts.setText(intent.getStringExtra("contacts"));
         String beginDate = intent.getStringExtra("beginDate");
         String endDate =  intent.getStringExtra("endDate");
@@ -77,6 +104,8 @@ public class ShowInfoActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         contacts = findViewById(R.id.contacts);
         date = findViewById(R.id.date);
+        preview = findViewById(R.id.previewImage);
+        imageLoading = findViewById(R.id.imageLoading);
     }
 
 }

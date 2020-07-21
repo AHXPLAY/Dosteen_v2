@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/includeAppBarMain" >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -19,17 +20,115 @@
             android:background="?attr/colorPrimary"/>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <RelativeLayout
+        android:id="@+id/searchSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar"
+        android:background="#FFeeeeee"
+        android:visibility="gone"
+        android:elevation="1dp">
+        <RadioGroup
+        android:id="@+id/typeOfSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Поиск по:"
+                android:textSize="16sp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchTypeName"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/searchTypeCity"
+                android:textSize="16dp"/>
+        </RadioGroup>
+        <RadioGroup
+            android:id="@+id/typeOfEvent"
+            android:layout_toRightOf="@id/typeOfSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Тип события:"
+                android:textSize="16sp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectAnyTypeOfEvents"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectSportTypeOfEvents"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectBuisnessTypeOfEvents"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectCreativeTypeOfEvents"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectEduTypeOfEvents"
+                android:textSize="16dp"/>
+        </RadioGroup>
+        <RadioGroup
+            android:id="@+id/TimeOfEvent"
+            android:layout_toRightOf="@id/typeOfEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Продолжительность:"
+                android:textSize="16sp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectAnyTimeOfEvent"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectConstantTimeOfEvent"
+                android:textSize="16dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/selectTemporaryTimeOfEvent"
+                android:textSize="16dp"/>
+        </RadioGroup>
+        <Button
+            android:id="@+id/hideSearchSettings"
+            android:layout_below="@id/typeOfEvent"
+            android:layout_alignParentRight="true"
+            android:text="Скрыть"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
 
     <fragment
-        android:layout_below="@id/appbar"
         android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/appbar"
         app:defaultNavHost="true"
-        app:navGraph = "@navigation/main_navigation"
-        android:name="androidx.navigation.fragment.NavHostFragment"/>
-
-
+        app:navGraph="@navigation/main_navigation" />
     <ProgressBar
         android:layout_centerInParent="true"
         android:id="@+id/mainProgressBar"

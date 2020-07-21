@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,12 +20,46 @@ import com.dahy.practice.ShowInfoActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventHolder> {
+public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventHolder> implements Filterable {
 
     private ArrayList<Event> eventsList;
+    private ArrayList<Event> eventListAll;
     private Context context;
     private String fragmentType;
+    private Filter filter = new Filter() {
+        @Override
+        //run on bg thread
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Event> filteredList = new ArrayList<>();
+            if(constraint.toString().isEmpty()){
+                filteredList.addAll(eventListAll);
+            }else{
+                for(Event event : eventListAll){
+                    if(event.getName().toLowerCase().contains(constraint.toString().toLowerCase())){
+                        filteredList.add(event);
+                    }
+                }
+            }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+            return filterResults;
+        }
+        //run on UI thread
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            eventsList.clear();
+            eventsList.addAll((Collection<? extends Event>) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
 
     public static class EventHolder extends RecyclerView.ViewHolder{
         public TextView name;
@@ -48,6 +84,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         this.eventsList = eventsList;
         this.context = context;
         this.fragmentType = fragmentType;
+        this.eventListAll = new ArrayList<>(eventsList);
     }
 
     @NonNull

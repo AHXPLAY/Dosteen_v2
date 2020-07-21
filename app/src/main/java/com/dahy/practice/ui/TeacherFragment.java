@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,7 +38,7 @@ public class TeacherFragment extends Fragment {
     FloatingActionButton addEvent;
 
     RecyclerView eventsList;
-    RecyclerView.Adapter listAdapter;
+    EventListAdapter listAdapter;
     RecyclerView.LayoutManager listLM;
     View container;
     ProgressBar progressBar;
@@ -45,7 +48,9 @@ public class TeacherFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_teacher, container, false);
         initializeViews(view);
-
+        setHasOptionsMenu(true);
+        //String searchQuery = getArguments().getString("searchQuery");
+        //Log.d("searchQuery", searchQuery);
 
         //getData();
 
@@ -140,5 +145,30 @@ public class TeacherFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getData();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.search, menu);
+
+        //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("newSearchQuery", query);
+                listAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("newSearchQuery", newText);
+                listAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 }
