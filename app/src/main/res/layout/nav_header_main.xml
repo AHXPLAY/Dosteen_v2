@@ -3,12 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/button">
+    android:background="@color/colorPrimary">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nav header"
-
-        android:textSize="@dimen/headers"/>
+        android:layout_centerInParent="true">
+        <TextView
+            android:id="@+id/nav_header_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="40sp"
+            android:textColor="#fff"
+            />
+        <ImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_toRightOf="@id/nav_header_text"
+            android:src="@drawable/ic_app_icon"/>
+    </RelativeLayout>
 </RelativeLayout>

@@ -366,12 +366,43 @@ public class EditEventActivity extends AppCompatActivity {
 
     private void deleteEvent() {
 
-        DocumentReference userDocument = db.collection("UsersDatabase").document(mAuth.getUid());
-        HashMap<String, Object> map = new HashMap<>();
+        final DocumentReference userDocument = db.collection("UsersDatabase").document(mAuth.getUid());
+        userDocument.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                String TAG  = "LOLOLOLOLO";
+                if (task.isSuccessful()) {
+
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+
+
+                        ArrayList<HashMap<String, Object>> gotList = (ArrayList) document.getData().get("listOfEvents");
+                        Log.d(TAG, "DocumentSnapshot data: " + gotList);
+                        gotList.remove(position);
+                        Log.d(TAG, "DocumentSnapshot data: " + gotList);
+                        userDocument.update("listOfEvents", gotList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    finish();
+                                }
+                            }
+                        });
+
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+        /*HashMap<String, Object> map = new HashMap<>();
         map.put("adress", previousIntent.getStringExtra("adress"));
         map.put("city", previousIntent.getStringExtra("city"));
         map.put("classIcon", previousIntent.getStringExtra("classIcon"));
-        map.put("constant", false);
+        map.put("constant", isConstant);
         map.put("description", previousIntent.getStringExtra("description"));
         map.put("name", previousIntent.getStringExtra("name"));
         map.put("picturesUrls", null);
@@ -384,7 +415,8 @@ public class EditEventActivity extends AppCompatActivity {
             public void onSuccess(Void aVoid) {
                 finish();
             }
-        });
+        });*/
+
     }
 
     private String generateUniqueID(){

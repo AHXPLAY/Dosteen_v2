@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public class SimpleUserFragment extends Fragment {
     private EventListAdapter simpleListAdapter;
     private RecyclerView.LayoutManager simpleListManager;
 
+    private ProgressBar progressBar;
     View layout;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -46,6 +48,8 @@ public class SimpleUserFragment extends Fragment {
        layout = inflater.inflate(R.layout.fragment_simple_user, container, false);
         getData();
         setHasOptionsMenu(true);
+        progressBar = getActivity().findViewById(R.id.mainProgressBar);
+        progressBar.setVisibility(View.VISIBLE);
         return layout;
     }
 
@@ -74,13 +78,17 @@ public class SimpleUserFragment extends Fragment {
     }
 
     private void simpleListCreate(ArrayList<Event> listItems, View view){
-        simpleList = view.findViewById(R.id.simpleList);
+        if(listItems != null){
+            progressBar.setVisibility(View.GONE);
+            simpleList = view.findViewById(R.id.simpleList);
 
-        simpleListManager = new LinearLayoutManager(getContext());
-        simpleList.setLayoutManager(simpleListManager);
+            simpleListManager = new LinearLayoutManager(getContext());
+            simpleList.setLayoutManager(simpleListManager);
 
-        simpleListAdapter = new EventListAdapter(listItems, getContext(),"showInfo");
-        simpleList.setAdapter((simpleListAdapter));
+            simpleListAdapter = new EventListAdapter(listItems, getContext(),"showInfo");
+            simpleList.setAdapter((simpleListAdapter));
+        }
+
     }
     private ArrayList<Event> createEvent(Object obj){
         ArrayList<HashMap<String, Object>> gotList = (ArrayList) obj;
